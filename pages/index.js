@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 
 function LandingPage() {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('/api/motoristas');
+      console.log(response.data);
+    } catch (error) {
+      console.error('Erro ao obter dados:', error);
+    }
+  };
+
   return (
     <div className="landing-page">
-      <h1>Bem-vindo à naaaaossa página!</h1>
+      <h1>Bem-vindo à nossa página!</h1>
       <p>Estamos felizes em tê-lo aqui.</p>
       <button>Explorar</button>
     </div>
