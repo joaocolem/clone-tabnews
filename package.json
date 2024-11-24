@@ -4,11 +4,14 @@
   "description": "Projeto para aprender de ponta a ponta um projeto real, com problemas reais e práticos.",
   "main": "index.js",
   "scripts": {
-   "dev": "next dev"
+    "dev": "next dev",
+    "start": "next start"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "axios": "^1.7.7",
+    "clone-tabnews": "file:",
     "next": "^13.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
