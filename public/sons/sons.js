@@ -19,6 +19,9 @@ const sons = {
         "/sons/perdeu/som-perdeu.mp3",
         "/sons/perdeu/zoeira-nao-voce-e-burro-cara-que-loucura.mp3",
         "/miau-triste.mp3"
+    ],
+    sounds: [
+        "/sons/som-de-sino-piscada.mp3",
     ]
 };
 
