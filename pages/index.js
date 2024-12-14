@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import sons from "../public/sons/sons"; // Importando o arquivo sons.js
-import questions from "../public/questions"; // Importando o arquivo sons.js
+import { getGroqChatCompletion } from "./QuestionAnswer"
 
 function TeamQuiz() {
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [currentQuestion, setCurrentQuestion] = useState(null); // Apenas uma pergunta
     const [activeTeam, setActiveTeam] = useState(null);  // Variável para armazenar o time ativo
     const [feedback, setFeedback] = useState("");
     const [teamScores, setTeamScores] = useState({ biscoitos: 0, renas: 0 });
@@ -13,19 +13,31 @@ function TeamQuiz() {
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
     const [chosenTeam, setChosenTeam] = useState(null); // Estado para armazenar o time escolhido
+    const [nextTheme, setNextTheme] = useState(""); // Estado para armazenar o tema da próxima pergunta
+
+    const incrementScore = (team) => {
+        setTeamScores((prevScores) => ({
+            ...prevScores,
+            [team]: prevScores[team] + 1,
+        }));
+    };
+
+    const decrementScore = (team) => {
+        setTeamScores((prevScores) => ({
+            ...prevScores,
+            [team]: prevScores[team] - 1,
+        }));
+    };
 
     useEffect(() => {
-        // Função para escolher um som aleatório
         const getRandomSound = (soundArray) => {
             const randomIndex = Math.floor(Math.random() * soundArray.length);
             return new Audio(soundArray[randomIndex]);
         };
 
-        // Atribuindo sons aleatórios para acerto e erro
         setCorrectSound(getRandomSound(sons.correctSounds));
         setIncorrectSound(getRandomSound(sons.incorrectSounds));
 
-        // Função para capturar teclas pressionadas para seleção do time
         const handleKeyPress = (event) => {
             if (!activeTeam) {
                 if (event.key === "1") {
@@ -36,10 +48,8 @@ function TeamQuiz() {
             }
         };
 
-        // Adicionando o ouvinte de evento para capturar a tecla pressionada
         window.addEventListener("keydown", handleKeyPress);
 
-        // Limpeza do ouvinte ao desmontar o componente
         return () => {
             window.removeEventListener("keydown", handleKeyPress);
         };
@@ -49,18 +59,37 @@ function TeamQuiz() {
         const audio = new Audio(sons.sounds[0]); // Som de sino
         audio.play();
     };
+
     const handleTeamPress = (team) => {
-        tocarSom()
+        tocarSom();
         if (!activeTeam) {
-            setActiveTeam(team);  // Definindo o time que clica primeiro como o time ativo
-            setChosenTeam(team); // Armazenando o time escolhido
+            setActiveTeam(team);
+            setChosenTeam(team);
         }
     };
+
+    const fetchNextQuestion = async (theme = "") => {
+        try {
+            const questionData = await getGroqChatCompletion(theme); // Passa o tema para a função
+            if (questionData?.question && questionData?.options && questionData?.correct !== undefined) {
+                setCurrentQuestion(questionData);
+            } else {
+                setShowErrorModal(true);
+            }
+        } catch (error) {
+            console.error("Erro ao buscar a pergunta:", error);
+            setShowErrorModal(true);
+        }
+    };
+
+    useEffect(() => {
+        fetchNextQuestion();
+    }, []);
 
     const handleAnswer = (optionIndex) => {
         if (answered) return;
 
-        const correctIndex = questions[currentQuestionIndex].correct;
+        const correctIndex = currentQuestion.correct;
         const opposingTeam = activeTeam === "biscoitos" ? "renas" : "biscoitos";
 
         if (optionIndex === correctIndex) {
@@ -88,69 +117,48 @@ function TeamQuiz() {
     const closeErrorModal = () => {
         setShowErrorModal(false);
         setAnswered(false);
-        setCurrentQuestionIndex((prevIndex) => (prevIndex + 1) % questions.length);
-        setActiveTeam(null);  // Resetando o time ativo após responder
-        setChosenTeam(null); // Resetando o time escolhido
+        fetchNextQuestion(nextTheme); // Passa o tema para buscar a próxima pergunta
+        setActiveTeam(null);
+        setChosenTeam(null);
+        setNextTheme(""); // Reseta o tema após uso
     };
 
-    // Definindo as cores de acordo com o time escolhido
     const teamColors = {
-        biscoitos: "#FF5722", // Laranja para o time Biscoitos
-        renas: "#3F51B5", // Azul para o time Renas
+        biscoitos: "#FF5722",
+        renas: "#3F51B5",
     };
 
     return (
         <div style={{ textAlign: "center", fontFamily: "Arial, sans-serif" }}>
             <h1>Time Quiz</h1>
 
-            {/* Placar */}
             <div style={{ display: "flex", justifyContent: "center", marginBottom: "30px" }}>
-                {/* Time Biscoitos */}
                 <div
                     style={{
                         margin: "0 20px",
-                        backgroundColor: "#FF5722", // Cor de fundo do time Biscoitos
+                        backgroundColor: "#FF5722",
                         color: "white",
                         padding: "15px 30px",
                         borderRadius: "12px",
                         textAlign: "center",
                         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                         fontSize: "24px",
-                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                        e.target.style.transform = "scale(1.05)";
-                        e.target.style.boxShadow = "0 8px 15px rgba(0, 0, 0, 0.2)";
-                    }}
-                    onMouseLeave={(e) => {
-                        e.target.style.transform = "scale(1)";
-                        e.target.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.1)";
                     }}
                 >
                     <h2>Time Biscoitos</h2>
                     <p style={{ fontSize: "32px", fontWeight: "bold" }}>{teamScores.biscoitos}</p>
                 </div>
 
-                {/* Time Renas */}
                 <div
                     style={{
                         margin: "0 20px",
-                        backgroundColor: "#3F51B5", // Cor de fundo do time Renas
+                        backgroundColor: "#3F51B5",
                         color: "white",
                         padding: "15px 30px",
                         borderRadius: "12px",
                         textAlign: "center",
                         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                         fontSize: "24px",
-                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                        e.target.style.transform = "scale(1.05)";
-                        e.target.style.boxShadow = "0 8px 15px rgba(0, 0, 0, 0.2)";
-                    }}
-                    onMouseLeave={(e) => {
-                        e.target.style.transform = "scale(1)";
-                        e.target.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.1)";
                     }}
                 >
                     <h2>Time Renas</h2>
@@ -158,14 +166,12 @@ function TeamQuiz() {
                 </div>
             </div>
 
-            {/* Pergunta */}
             <div>
-                <h2>{questions[currentQuestionIndex].question}</h2>
+                <h2>{currentQuestion?.question}</h2>
 
-                {/* Alternativas só aparecem após escolher o time */}
-                {activeTeam && (
+                {activeTeam && currentQuestion && (
                     <div>
-                        {questions[currentQuestionIndex].options.map((option, index) => (
+                        {currentQuestion.options.map((option, index) => (
                             <button
                                 key={index}
                                 onClick={() => handleAnswer(index)}
@@ -174,7 +180,6 @@ function TeamQuiz() {
                                     padding: "10px 20px",
                                     margin: "10px",
                                     fontSize: "18px",
-                                    cursor: "pointer",
                                     backgroundColor: answered ? "#ccc" : "#4CAF50",
                                     color: "white",
                                     border: "none",
@@ -188,7 +193,6 @@ function TeamQuiz() {
                 )}
             </div>
 
-            {/* Modal de feedback */}
             {showErrorModal && (
                 <div
                     style={{
@@ -202,13 +206,24 @@ function TeamQuiz() {
                         fontSize: "30px",
                         borderRadius: "10px",
                         textAlign: "center",
-                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
                         width: "300px",
-                        zIndex: 1000,
                     }}
                 >
                     <h2>{isCorrect ? "ACERTOU!" : "ERROU!"}</h2>
                     <p>{feedback}</p>
+                    <input
+                        type="text"
+                        placeholder="Tema da próxima pergunta"
+                        value={nextTheme}
+                        onChange={(e) => setNextTheme(e.target.value)}
+                        style={{
+                            width: "80%",
+                            padding: "10px",
+                            margin: "15px 0",
+                            borderRadius: "5px",
+                            border: "1px solid #ddd",
+                        }}
+                    />
                     <button
                         onClick={closeErrorModal}
                         style={{
@@ -217,15 +232,13 @@ function TeamQuiz() {
                             color: isCorrect ? "#4CAF50" : "#F44336",
                             border: "none",
                             borderRadius: "5px",
-                            cursor: "pointer",
                         }}
                     >
-                        Fechar
+                        Próxima
                     </button>
                 </div>
             )}
 
-            {/* Seleção do time */}
             {!activeTeam && (
                 <div style={{ marginTop: "30px" }}>
                     <h3>Escolha o time para começar!</h3>
@@ -234,12 +247,10 @@ function TeamQuiz() {
                         style={{
                             padding: "10px 20px",
                             fontSize: "18px",
-                            cursor: "pointer",
                             backgroundColor: "#FF5722",
                             color: "white",
-                            border: "none",
                             borderRadius: "5px",
-                            margin: "10px",
+                            marginRight: "20px",
                         }}
                     >
                         Time Biscoitos
@@ -249,38 +260,13 @@ function TeamQuiz() {
                         style={{
                             padding: "10px 20px",
                             fontSize: "18px",
-                            cursor: "pointer",
                             backgroundColor: "#3F51B5",
                             color: "white",
-                            border: "none",
                             borderRadius: "5px",
-                            margin: "10px",
                         }}
                     >
                         Time Renas
                     </button>
-                </div>
-            )}
-
-            {/* Exibindo nome do time escolhido com fundo quadrado */}
-            {chosenTeam && (
-                <div
-                    style={{
-                        position: "fixed",
-                        bottom: "400px", // Ajusta para não ficar tão embaixo
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        backgroundColor: teamColors[chosenTeam], // Cor do time
-                        padding: "20px",
-                        borderRadius: "8px",
-                        fontSize: "24px",
-                        fontWeight: "bold",
-                        color: "white",
-                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
-                        zIndex: 10,
-                    }}
-                >
-                    Time {chosenTeam.toUpperCase()}!!!
                 </div>
             )}
         </div>
