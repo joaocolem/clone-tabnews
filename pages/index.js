@@ -188,7 +188,7 @@ function TeamQuiz() {
                         </button>
                         <button
                             onClick={() => decrementScore("biscoitos")}
-                            style={buttonStyle}
+                            style={buttonStyleRed}
                         >
                             ↓
                         </button>
@@ -228,7 +228,7 @@ function TeamQuiz() {
                         </button>
                         <button
                             onClick={() => decrementScore("renas")}
-                            style={buttonStyle}
+                            style={buttonStyleRed}
                         >
                             ↓
                         </button>
@@ -361,6 +361,17 @@ const buttonStyle = {
     margin: "0 5px",
     padding: "10px 15px",
     backgroundColor: "#4CAF50",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    fontSize: "20px",
+    cursor: "pointer",
+};
+
+const buttonStyleRed = {
+    margin: "0 5px",
+    padding: "10px 15px",
+    backgroundColor: "red",
     color: "white",
     border: "none",
     borderRadius: "5px",
