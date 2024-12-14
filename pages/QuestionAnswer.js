@@ -32,4 +32,9 @@ export async function getGroqChatCompletion(theme = "Ciências") {
     return questionData;
 }
 
+const QuestionAnswer = () => {
+    return <div>Question Answer Page</div>;
+};
+
+export default QuestionAnswer;
 
