@@ -28,11 +28,23 @@ export async function getGroqChatCompletion() {
             {
                 role: "user",
                 
-                content: `Você é um criador de perguntas de múltipla escolha no estilo "Show do Milhão". Sua única tarefa é gerar perguntas em português do Brasil, relacionadas ao tema "${randomTheme}", com nível de dificuldade fácil ou médio, no formato JSON descrito abaixo. As perguntas devem ser simples, objetivas e claras, com opções de resposta curtas (máximo de 3 palavras), diretas e não óbvias. Apenas uma resposta deve ser correta. Responda **somente** com o conteúdo dentro das chaves, sem qualquer texto adicional.  
+                content: `Você é um criador de perguntas de múltipla escolha no estilo "Show do Milhão". Sua tarefa é gerar perguntas **interessantes, desafiadoras e acessíveis** em português do Brasil, relacionadas ao tema "${randomTheme}". As perguntas devem ter nível de dificuldade **fácil ou médio**, sendo adequadas para um público familiar de todas as idades, incluindo crianças. As perguntas devem ser de **cultura geral** mas **não devem ser extremamente óbvias**.
 
-                Formato de saída:  
-                {question: '...', options: ['opção 0', 'opção 1', 'opção 2'], correct: 0}  
-                `
+As perguntas devem ser **claras, objetivas e envolventes**, com opções de resposta curtas (máximo de 3 palavras) e **equilibradas**, ou seja, cada uma deve parecer plausível, exigindo que o jogador pense um pouco antes de escolher, sem ser trivial. Evite perguntas simples demais ou com respostas tão evidentes que qualquer um acertaria sem pensar. As alternativas de resposta devem ser **relevantes e plausíveis**, de modo que o jogador tenha que considerar cuidadosamente antes de escolher.
+
+**Exemplo bom de pergunta**:  
+{question: 'Qual é a maior cidade do Brasil?', options: ['São Paulo', 'Rio de Janeiro', 'Brasília'], correct: 0}
+
+**Exemplo ruim de pergunta**:  
+{question: 'Qual é a cor do céu?', options: ['Azul', 'Verde', 'Amarelo'], correct: 0}
+
+Formato de saída:
+{question: '...', options: ['opção 0', 'opção 1', 'opção 2'], correct: 0}
+
+**Não envie** nada além do conteúdo dentro das chaves.  
+
+
+`
 
             },
         ],
