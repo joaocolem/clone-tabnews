@@ -134,6 +134,14 @@ function TeamQuiz() {
         setShowErrorModal(true);
     };
 
+    const skipQuestion = () => {
+        setAnswered(false);
+        fetchNextQuestion(nextTheme); // Chama a próxima pergunta
+        setActiveTeam(null);
+        setChosenTeam(null);
+        setNextTheme(""); // Reseta o tema após uso
+    };
+
     const closeErrorModal = () => {
         setShowErrorModal(false);
         setAnswered(false);
@@ -244,7 +252,7 @@ function TeamQuiz() {
             >
                 {activeTeam ? (
                     <p style={{ fontSize: "32px", fontWeight: "bold" }}>
-                        <span>🎉 Time Ativo: </span>
+                        <span>🎉  </span>
                         <span
                             style={{
                                 color: "#FFF",
@@ -253,6 +261,8 @@ function TeamQuiz() {
                         >
                             {activeTeam === "biscoitos" ? "Biscoitos" : "Renas"}
                         </span>
+                        <span>  🎉  </span>
+
                     </p>
                 ) : (
                     <p style={{ fontSize: "24px", color: "#333" }}>
@@ -264,7 +274,6 @@ function TeamQuiz() {
             {/* Pergunta */}
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
                 <h2 style={{ fontSize: "36px", fontWeight: "bold" }}>{currentQuestion?.question}</h2>
-
                 {/* Alternativas só aparecem após escolher o time */}
                 {activeTeam && currentQuestion && (
                     <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
@@ -292,6 +301,23 @@ function TeamQuiz() {
                 )}
             </div>
 
+                                {/* Botão roxo para pular a pergunta */}
+                                <button
+                                                onClick={skipQuestion}
+                                                style={{
+                                                    margin: "20px",
+                                                    padding: "15px 30px",
+                                                    backgroundColor: "#9C27B0", // Cor roxa
+                                                    color: "white",
+                                                    border: "none",
+                                                    borderRadius: "10px",
+                                                    fontSize: "22px",
+                                                    cursor: "pointer",
+                                                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                                                }}
+                                            >
+                                                Pular pergunta
+                                            </button>
 
 
             {/* Modal de feedback */}
