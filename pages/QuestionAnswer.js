@@ -12,12 +12,11 @@ export async function getGroqChatCompletion() {
 
     // Array com os temas disponíveis
     const themes = [
-        "História",
         "Geografia",
         "Artes e Cultura Geral",
         "Esportes",
-        "Atualidades",
-        "Cinema e TV",
+        "Cinema e TV, filmes e séries",
+        "Matemática básica,
         "Curiosidades"
     ];
 
@@ -29,7 +28,7 @@ export async function getGroqChatCompletion() {
             {
                 role: "user",
                 
-                content: `Elabore uma pergunta de múltipla escolha no estilo "Show do Milhão", com nível de dificuldade fácil ou médio. As perguntas serão para um jogo a ser jogado em família, com pessoas de todas as idades. O jogo deve ser divertido. A pergunta formulada deve ser simples, objetiva e clara, estar em português do Brasil, com opções diretas e curtas, mas as respostas não devem ser tão óbvias, cada texto da opcao deve ter no maximo 3 palavras. As respostas devem ser fáceis de entender e relacionadas corretamente a pergunta. Certifique-se de que a pergunta tenha a opção correta e que as respostas sejam simples e diretas. A resposta deve ser no formato: {question: '...', options: ['opção 0', 'opção 1', 'opção 2'], correct: 0}. Eu quero apenas o que está dentro de {} e não quero nada além disso.`
+                content: `Elabore uma pergunta de múltipla escolha no estilo "Show do Milhão", com nível de dificuldade fácil ou médio relacionada ao tema "${randomTheme}". As perguntas serão para um jogo a ser jogado em família, com pessoas de todas as idades. A pergunta formulada deve ser simples, objetiva e clara, estar em português do Brasil, com opções diretas e curtas, mas as respostas não devem ser tão óbvias, cada texto da opcao da resposta deve ter no maximo 3 palavras. As respostas devem ser fáceis de entender e relacionadas corretamente a pergunta e ao tema. Certifique-se de que a pergunta tenha a opção correta e que as respostas sejam simples e diretas e que o português esteja correto. A resposta deve ser no formato: {question: '...', options: ['opção 0', 'opção 1', 'opção 2'], correct: 0}. Eu quero apenas o que está dentro de {} e não quero nada além disso.`
             },
         ],
         model: "llama3-8b-8192",
