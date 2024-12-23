@@ -262,26 +262,27 @@ function TeamQuiz() {
             </div>
 
             {/* Pergunta */}
-            <div>
-                <h2>{currentQuestion?.question}</h2>
+            <div style={{ textAlign: "center", marginBottom: "20px" }}>
+                <h2 style={{ fontSize: "36px", fontWeight: "bold" }}>{currentQuestion?.question}</h2>
 
                 {/* Alternativas só aparecem após escolher o time */}
                 {activeTeam && currentQuestion && (
-                    <div>
+                    <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
                         {currentQuestion.options.map((option, index) => (
                             <button
                                 key={index}
                                 onClick={() => handleAnswer(index)}
                                 disabled={answered}
                                 style={{
-                                    padding: "10px 20px",
-                                    margin: "10px",
-                                    fontSize: "18px",
+                                    padding: "15px 30px", // Aumentando o padding
+                                    margin: "15px", // Aumentando o espaço entre os botões
+                                    fontSize: "22px", // Aumentando a fonte dos botões
                                     cursor: "pointer",
                                     backgroundColor: answered ? "#ccc" : "#4CAF50",
                                     color: "white",
                                     border: "none",
-                                    borderRadius: "5px",
+                                    borderRadius: "10px", // Bordas mais arredondadas
+                                    width: "200px", // Ajustando a largura do botão para ficar na horizontal
                                 }}
                             >
                                 {option}
@@ -290,6 +291,8 @@ function TeamQuiz() {
                     </div>
                 )}
             </div>
+
+
 
             {/* Modal de feedback */}
             {showErrorModal && (
