@@ -16,7 +16,7 @@ export async function getGroqChatCompletion() {
         "Artes e Cultura Geral",
         "Esportes",
         "Cinema e TV, filmes e séries",
-        "Matemática básica,
+        "Matemática básica",
         "Curiosidades"
     ];
 
