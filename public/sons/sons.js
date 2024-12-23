@@ -21,7 +21,7 @@ const sons = {
         "/miau-triste.mp3"
     ],
     sounds: [
-        "/sons/som-de-sino-piscada.mp3",
+        "/sons/britains-got-talent-buzzer.mp3",
     ]
 };
 
