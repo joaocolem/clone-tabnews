@@ -97,7 +97,7 @@ function TeamQuiz() {
             }
         } catch (error) {
             console.error("Erro ao buscar a pergunta:", error);
-            setShowErrorModal(true); // Exibe o erro se ocorrer algum problema na chamada da API
+            fetchNextQuestion(); // Exibe o erro se ocorrer algum problema na chamada da API
         }
     };
 
@@ -166,15 +166,6 @@ function TeamQuiz() {
                         textAlign: "center",
                         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                         fontSize: "24px",
-                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                        e.target.style.transform = "scale(1.05)";
-                        e.target.style.boxShadow = "0 8px 15px rgba(0, 0, 0, 0.2)";
-                    }}
-                    onMouseLeave={(e) => {
-                        e.target.style.transform = "scale(1)";
-                        e.target.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.1)";
                     }}
                 >
                     <h2>Time Biscoitos</h2>
@@ -206,15 +197,6 @@ function TeamQuiz() {
                         textAlign: "center",
                         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                         fontSize: "24px",
-                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                        e.target.style.transform = "scale(1.05)";
-                        e.target.style.boxShadow = "0 8px 15px rgba(0, 0, 0, 0.2)";
-                    }}
-                    onMouseLeave={(e) => {
-                        e.target.style.transform = "scale(1)";
-                        e.target.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.1)";
                     }}
                 >
                     <h2>Time Renas</h2>
@@ -234,9 +216,40 @@ function TeamQuiz() {
                         </button>
                     </div>
                 </div>
-
             </div>
 
+            {/* Destaque para o time ativo */}
+            <div
+                style={{
+                    margin: "20px auto",
+                    padding: "20px",
+                    fontSize: "24px",
+                    color: "white",
+                    backgroundColor: activeTeam === "biscoitos" ? "#FF5722" : activeTeam === "renas" ? "#3F51B5" : "#ccc",
+                    borderRadius: "12px",
+                    textAlign: "center",
+                    width: "50%",
+                    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
+                }}
+            >
+                {activeTeam ? (
+                    <p style={{ fontSize: "32px", fontWeight: "bold" }}>
+                        <span>🎉 Time Ativo: </span>
+                        <span
+                            style={{
+                                color: "#FFF",
+                                textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)",
+                            }}
+                        >
+                            {activeTeam === "biscoitos" ? "Biscoitos" : "Renas"}
+                        </span>
+                    </p>
+                ) : (
+                    <p style={{ fontSize: "24px", color: "#333" }}>
+                        Aperte o botão!
+                    </p>
+                )}
+            </div>
 
             {/* Pergunta */}
             <div>
@@ -289,72 +302,26 @@ function TeamQuiz() {
                 >
                     <h2>{isCorrect ? "ACERTOU!" : "ERROU!"}</h2>
                     <p>{feedback}</p>
-                    <input
-                        type="text"
-                        placeholder="Tema da próxima pergunta"
-                        value={nextTheme}
-                        onChange={(e) => setNextTheme(e.target.value)}
-                        style={{
-                            width: "80%",
-                            padding: "10px",
-                            margin: "15px 0",
-                            borderRadius: "5px",
-                            border: "1px solid #ddd",
-                        }}
-                    />
                     <button
                         onClick={closeErrorModal}
                         style={{
-                            padding: "10px 20px",
                             backgroundColor: "white",
                             color: isCorrect ? "#4CAF50" : "#F44336",
                             border: "none",
                             borderRadius: "5px",
-                            cursor: "pointer",
-                        }}
-                    >
-                        Próxima
-                    </button>
-                </div>
-            )}
-
-            {/* Seleção do time */}
-            {!activeTeam && (
-                <div style={{ marginTop: "30px" }}>
-                    <h3>Escolha o time para começar!</h3>
-                    <button
-                        onClick={() => handleTeamPress("biscoitos")}
-                        style={{
                             padding: "10px 20px",
-                            fontSize: "18px",
                             cursor: "pointer",
-                            backgroundColor: "#FF5722",
-                            color: "white",
-                            border: "none",
-                            borderRadius: "5px",
-                            marginRight: "20px",
+                            fontSize: "20px",
                         }}
                     >
-                        Time Biscoitos
-                    </button>
-                    <button
-                        onClick={() => handleTeamPress("renas")}
-                        style={{
-                            padding: "10px 20px",
-                            fontSize: "18px",
-                            cursor: "pointer",
-                            backgroundColor: "#3F51B5",
-                            color: "white",
-                            border: "none",
-                            borderRadius: "5px",
-                        }}
-                    >
-                        Time Renas
+                        Fechar
                     </button>
                 </div>
             )}
         </div>
+
     );
+
 }
 
 const buttonStyle = {
