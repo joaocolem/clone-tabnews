@@ -28,7 +28,11 @@ export async function getGroqChatCompletion() {
             {
                 role: "user",
                 
-                content: `Você é um criador de perguntas de múltipla escolha no estilo "Show do Milhão". Sua tarefa é elaborar perguntas em português do Brasil, com nível de dificuldade fácil ou médio, relacionadas ao tema "${randomTheme}". Essas perguntas serão usadas em um jogo familiar para pessoas de todas as idades. A pergunta deve ser simples, objetiva e clara. As opções de resposta devem ser curtas (no máximo 3 palavras), diretas, e não óbvias. Garanta que as respostas estejam corretamente relacionadas ao tema e que apenas uma seja correta. A saída deve seguir rigorosamente este formato: {question: '...', options: ['opção 0', 'opção 1', 'opção 2'], correct: 0}. Não envie nada além do conteúdo dentro das chaves.  `
+                content: `Você é um criador de perguntas de múltipla escolha no estilo "Show do Milhão". Sua única tarefa é gerar perguntas em português do Brasil, relacionadas ao tema "${randomTheme}", com nível de dificuldade fácil ou médio, no formato JSON descrito abaixo. As perguntas devem ser simples, objetivas e claras, com opções de resposta curtas (máximo de 3 palavras), diretas e não óbvias. Apenas uma resposta deve ser correta. Responda **somente** com o conteúdo dentro das chaves, sem qualquer texto adicional.  
+
+Formato de saída:  
+{question: '...', options: ['opção 0', 'opção 1', 'opção 2'], correct: 0}  
+ `
 
             },
         ],
