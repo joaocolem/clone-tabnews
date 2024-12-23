@@ -14,7 +14,7 @@ export async function getGroqChatCompletion(theme = "Ciências") {
         messages: [
             {
                 role: "user",
-                content: `Elabore uma pergunta de múltipla escolha em português, com nível de dificuldade variado (fácil, médio ou difícil), relacionada ao tema "${theme}", incluindo a pergunta, três opções de resposta e o índice da opção correta (iniciado em 0). A pergunta deve ser relacionada à cultura brasileira ou conhecimentos gerais e a resposta deve estar no formato: {question: '...', options: [...], correct: 0}, eu quero apenas o que está dentro de {} e não quero nada além disso.`,
+                content: `Elabore uma pergunta de múltipla escolha em português, com nível de dificuldade variado (fácil, médio ou difícil), relacionada ao tema "${theme}", incluindo a pergunta, três opções de resposta e o índice da opção correta (iniciado em 0). A pergunta conhecimentos gerais e a resposta deve estar no formato: {question: '...', options: [...], correct: 0}, eu quero apenas o que está dentro de {} e não quero nada além disso.`,
             },
         ],
         model: "llama3-8b-8192",

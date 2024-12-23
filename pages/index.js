@@ -87,7 +87,7 @@ function TeamQuiz() {
         }
     };
 
-    const fetchNextQuestion = async (theme = "") => {
+    const fetchNextQuestion = async (theme = "conhecimentos gerais aleatórios")=> {
         try {
             const questionData = await getGroqChatCompletion(theme); // Passa o tema para a função
             if (questionData?.question && questionData?.options && questionData?.correct !== undefined) {
