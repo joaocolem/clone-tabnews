@@ -18,7 +18,7 @@ const sons = {
         "/sons/perdeu/som-perdeu-2.mp3",
         "/sons/perdeu/som-perdeu.mp3",
         "/sons/perdeu/zoeira-nao-voce-e-burro-cara-que-loucura.mp3",
-        "/miau-triste.mp3"
+        "/sons/perdeu/miau-triste.mp3"
     ],
     sounds: [
         "/sons/britains-got-talent-buzzer.mp3",

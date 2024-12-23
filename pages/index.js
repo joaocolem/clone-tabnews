@@ -14,7 +14,6 @@ function TeamQuiz() {
     const [isCorrect, setIsCorrect] = useState(false);
     const [chosenTeam, setChosenTeam] = useState(null); // Estado para armazenar o time escolhido
     const [nextTheme, setNextTheme] = useState(""); // Estado para armazenar o tema da próxima pergunta
-    const audio = new Audio(sons.sounds[0]); // Som de sino
 
     const incrementScore = (team) => {
         setTeamScores((prevScores) => ({
@@ -57,6 +56,8 @@ function TeamQuiz() {
 
         // Função para capturar teclas pressionadas para seleção do time
         const handleKeyPress = (event) => {
+    const audio = new Audio(sons.sounds[0]); // Som de sino
+
             audio.play()
             if (!activeTeam) {
                 if (event.key === "1") {
