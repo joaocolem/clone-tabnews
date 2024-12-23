@@ -29,7 +29,7 @@ export async function getGroqChatCompletion() {
             {
                 role: "user",
                 
-                content: `Elabore uma pergunta de múltipla escolha no estilo "Show do Milhão", com nível de dificuldade facil, relacionada ao tema "${randomTheme}". A pergunta deve ser simples, objetiva e clara, com opções diretas e curtas. As respostas devem ser fáceis de entender e relacionadas corretamente ao tema. Certifique-se de que a pergunta tenha a opção correta e que as respostas sejam simples e diretas. A resposta deve ser no formato: {question: '...', options: ['opção 0', 'opção 1', 'opção 2'], correct: 0}. Eu quero apenas o que está dentro de {} e não quero nada além disso.`
+                content: `Elabore uma pergunta de múltipla escolha no estilo "Show do Milhão", com nível de dificuldade fácil. A pergunta deve ser simples, objetiva e clara, com opções diretas e curtas, cada texto da opcao deve ter no maximo 3 palavras. As respostas devem ser fáceis de entender e relacionadas corretamente ao tema. Certifique-se de que a pergunta tenha a opção correta e que as respostas sejam simples e diretas. A resposta deve ser no formato: {question: '...', options: ['opção 0', 'opção 1', 'opção 2'], correct: 0}. Eu quero apenas o que está dentro de {} e não quero nada além disso.`
             },
         ],
         model: "llama3-8b-8192",
