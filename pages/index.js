@@ -87,7 +87,7 @@ function TeamQuiz() {
         }
     };
 
-    const fetchNextQuestion = async (theme = "conhecimentos gerais aleatórios")=> {
+    const fetchNextQuestion = async (theme = "conhecimentos gerais aleatórios") => {
         try {
             const questionData = await getGroqChatCompletion(theme); // Passa o tema para a função
             if (questionData?.question && questionData?.options && questionData?.correct !== undefined) {
@@ -155,7 +155,6 @@ function TeamQuiz() {
 
             {/* Placar */}
             <div style={{ display: "flex", justifyContent: "center", marginBottom: "30px" }}>
-                {/* Time Biscoitos */}
                 <div
                     style={{
                         margin: "0 20px",
@@ -168,7 +167,12 @@ function TeamQuiz() {
                         fontSize: "24px",
                     }}
                 >
-                    <h2>Time Biscoitos</h2>
+                    <h2
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleTeamPress("biscoitos")}
+                    >
+                        Time Biscoitos
+                    </h2>
                     <p style={{ fontSize: "32px", fontWeight: "bold" }}>{teamScores.biscoitos}</p>
                     <div>
                         <button
@@ -186,7 +190,6 @@ function TeamQuiz() {
                     </div>
                 </div>
 
-                {/* Time Renas */}
                 <div
                     style={{
                         margin: "0 20px",
@@ -199,7 +202,12 @@ function TeamQuiz() {
                         fontSize: "24px",
                     }}
                 >
-                    <h2>Time Renas</h2>
+                    <h2
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleTeamPress("renas")}
+                    >
+                        Time Renas
+                    </h2>
                     <p style={{ fontSize: "32px", fontWeight: "bold" }}>{teamScores.renas}</p>
                     <div>
                         <button
@@ -216,6 +224,8 @@ function TeamQuiz() {
                         </button>
                     </div>
                 </div>
+
+
             </div>
 
             {/* Destaque para o time ativo */}
