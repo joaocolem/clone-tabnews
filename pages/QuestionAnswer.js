@@ -12,12 +12,12 @@ export async function getGroqChatCompletion() {
 
     // Array com os temas disponíveis
     const themes = [
-        "Geografia",
+        "Geografia do Brasil",
         // "Artes e Cultura Geral",
         "Esportes",
         "Cinema e TV, filmes e séries",
         "Curiosidades",
-        "Música"
+        "Música brasileira"
     ];
 
     // Função para escolher um tema aleatório
@@ -28,7 +28,7 @@ export async function getGroqChatCompletion() {
             {
                 role: "user",
                 
-                content: `Você é um criador de perguntas de múltipla escolha no estilo "Show do Milhão". Sua tarefa é gerar perguntas **interessantes, desafiadoras e acessíveis** em português do Brasil, relacionadas ao tema "${randomTheme}". As perguntas devem ter nível de dificuldade **fácil ou médio**, sendo adequadas para um público familiar de todas as idades, incluindo crianças. As perguntas devem ser de **cultura geral** mas **não devem ser extremamente óbvias**.
+                content: `Você é um criador de perguntas de múltipla escolha no estilo "Show do Milhão". Sua tarefa é gerar perguntas **interessantes, e acessíveis** em português do Brasil, relacionadas ao tema "${randomTheme}". As perguntas devem ter nível de dificuldade **fácil ou médio**, sendo adequadas para um público familiar de todas as idades, incluindo crianças. As perguntas devem ser de **cultura geral** mas **não devem ser extremamente óbvias**.
 
 As perguntas devem ser **claras, objetivas e envolventes**, com opções de resposta curtas (máximo de 3 palavras) e **equilibradas**, ou seja, cada uma deve parecer plausível, exigindo que o jogador pense um pouco antes de escolher, sem ser trivial. Evite perguntas simples demais ou com respostas tão evidentes que qualquer um acertaria sem pensar. As alternativas de resposta devem ser **relevantes e plausíveis**, de modo que o jogador tenha que considerar cuidadosamente antes de escolher.
 
