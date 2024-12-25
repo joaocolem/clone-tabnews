@@ -12,12 +12,12 @@ export async function getGroqChatCompletion() {
 
     // Array com os temas disponíveis
     const themes = [
-        "Geografia do Brasil",
+        
         // "Artes e Cultura Geral",
-        "Esportes",
+        
         "Cinema e TV, filmes e séries",
         "Curiosidades",
-        "Música brasileira"
+        
     ];
 
     // Função para escolher um tema aleatório
